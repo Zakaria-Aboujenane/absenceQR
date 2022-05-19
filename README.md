@@ -1,4 +1,4 @@
-## Absence QR
+# Absence QR
 ![depositphotos_124327470-stock-illustration-absent-rubber-stamp](https://user-images.githubusercontent.com/59621313/169297947-2a823e31-a802-4206-9836-328ae6cdf103.jpg)
 ## introduction
 Cette application est cree pour les ecoles , dont le marquage d'absence est indispensable.Le but est d'eviter le marquage d'absence classique qui consome beaucoup de temps.
