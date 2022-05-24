@@ -56,3 +56,7 @@ Route::group(['middleware' => 'auth:etudiant'], function () {
 Route::get('/logout', [LoginController::class,'logout'])->name('logout');
 
 
+//testing:
+Route::get('/test',[\App\Http\Controllers\testingController::class,'testi']);
+
+

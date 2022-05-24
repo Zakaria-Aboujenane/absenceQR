@@ -22,6 +22,11 @@ return new class extends Migration
             $table->string('email_parent');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            // define foreign key
+            $table->foreignId('filiere_id')
+                ->constrained('filieres')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
 
             $table->timestamps();
         });
