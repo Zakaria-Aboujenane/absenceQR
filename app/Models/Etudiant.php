@@ -43,6 +43,9 @@ use Laravel\Sanctum\HasApiTokens;
  * @method static \Illuminate\Database\Eloquent\Builder|Etudiant wherePassword($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Etudiant whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property-read \App\Models\Filiere|null $filiere
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Seance[] $seances
+ * @property-read int|null $seances_count
  */
 class Etudiant extends Authenticatable
 {
@@ -60,5 +63,9 @@ class Etudiant extends Authenticatable
     public function filiere()
     {
         return $this->belongsTo(Filiere::class);
+    }
+    public function seances()
+    {
+        return $this->belongsToMany(Seance::class,'absence');
     }
 }

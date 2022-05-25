@@ -24,6 +24,12 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @method static \Illuminate\Database\Eloquent\Builder|Filiere whereNiveau($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Filiere whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Etudiant[] $etudiants
+ * @property-read int|null $etudiants_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Prof[] $filieres
+ * @property-read int|null $filieres_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Seance[] $seances
+ * @property-read int|null $seances_count
  */
 class Filiere extends Model
 {

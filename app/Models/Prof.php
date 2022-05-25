@@ -35,6 +35,8 @@ use Laravel\Sanctum\HasApiTokens;
  * @method static \Illuminate\Database\Eloquent\Builder|Prof wherePassword($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Prof whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Filiere[] $filieres
+ * @property-read int|null $filieres_count
  */
 class Prof extends Authenticatable
 {
@@ -52,4 +54,6 @@ class Prof extends Authenticatable
     {
         return $this->belongsToMany(Filiere::class,'profs_filieres');
     }
+
+
 }
