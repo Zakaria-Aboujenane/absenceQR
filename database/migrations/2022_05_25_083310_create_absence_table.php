@@ -13,21 +13,18 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('etudiants', function (Blueprint $table) {
+        Schema::create('absence', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->string('cin');
-            $table->string('cne');
-            $table->string('email_parent');
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            // define foreign key
-            $table->foreignId('filiere_id')
-                ->constrained('filieres')
+            $table->foreignId('etudiant_id')
+                ->constrained('etudiants')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-
+            $table->foreignId('seance_id')
+                ->constrained('seances')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+            $table->boolean('is_absent')->default(0);
+//          si is_absent == 1 donc l'etudiant est absent
             $table->timestamps();
         });
     }
@@ -39,6 +36,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('etudiants');
+        Schema::dropIfExists('absence');
     }
 };

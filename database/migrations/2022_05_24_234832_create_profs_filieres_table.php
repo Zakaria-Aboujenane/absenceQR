@@ -13,22 +13,18 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('etudiants', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->string('cin');
-            $table->string('cne');
-            $table->string('email_parent');
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            // define foreign key
+        Schema::create('profs_filieres', function (Blueprint $table) {
+            $table->increments('id');
             $table->foreignId('filiere_id')
                 ->constrained('filieres')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
 
-            $table->timestamps();
+            $table->foreignId('prof_id')
+                ->constrained('profs')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+//            $table->timestamps();
         });
     }
 
@@ -39,6 +35,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('etudiants');
+        Schema::dropIfExists('profs_filieres');
     }
 };
