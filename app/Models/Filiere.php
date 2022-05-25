@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * App\Models\Filiere
@@ -35,5 +36,9 @@ class Filiere extends Model
     public function etudiants()
     {
         return $this->hasMany(Etudiant::class);
+    }
+    public function filieres()
+    {
+        return $this->belongsToMany(Prof::class,'profs_filieres');
     }
 }

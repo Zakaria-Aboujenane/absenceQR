@@ -47,4 +47,9 @@ class Prof extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function filieres()
+    {
+        return $this->belongsToMany(Filiere::class,'profs_filieres');
+    }
 }

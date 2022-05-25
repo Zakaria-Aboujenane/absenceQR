@@ -57,6 +57,6 @@ Route::get('/logout', [LoginController::class,'logout'])->name('logout');
 
 
 //testing:
-Route::get('/test',[\App\Http\Controllers\testingController::class,'testi']);
+Route::get('/test',[\App\Http\Controllers\testingController::class,'test_Filiere_Prof']);
 
 
