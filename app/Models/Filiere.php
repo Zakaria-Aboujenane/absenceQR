@@ -41,4 +41,8 @@ class Filiere extends Model
     {
         return $this->belongsToMany(Prof::class,'profs_filieres');
     }
+    public function seances()
+    {
+        return $this->hasMany(Seance::class);
+    }
 }
