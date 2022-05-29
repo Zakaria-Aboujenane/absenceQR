@@ -4,6 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
+use Nette\Utils\DateTime;
+use phpDocumentor\Reflection\Types\AbstractList;
 
 /**
  * App\Models\Seance
@@ -37,6 +40,16 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Seance whereSeancePasse($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Seance whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property int $filiere_id
+ * @method static \Illuminate\Database\Eloquent\Builder|Seance active()
+ * @method static \Illuminate\Database\Eloquent\Builder|Seance seancePasse()
+ * @method static \Illuminate\Database\Eloquent\Builder|Seance today()
+ * @method static \Illuminate\Database\Eloquent\Builder|Seance validSeances()
+ * @method static \Illuminate\Database\Eloquent\Builder|Seance whereFiliereId($value)
+ * @property int $prof_id
+ * @property-read \App\Models\Prof|null $prof
+ * @method static \Illuminate\Database\Eloquent\Builder|Seance seancesDuProf($idProf)
+ * @method static \Illuminate\Database\Eloquent\Builder|Seance whereProfId($value)
  */
 class Seance extends Model
 {
@@ -54,8 +67,48 @@ class Seance extends Model
     {
         return $this->belongsTo(Seance::class);
     }
+    public function prof()
+    {
+        return $this->belongsTo(Prof::class);
+    }
     public function etudiants()
     {
         return $this->belongsToMany(Etudiant::class,'absence');
+    }
+    public function scopeToday($query){
+
+
+        $date = now();
+        $d    = new DateTime($date);
+        $d->format('l');  //pass l for lion aphabet in format
+        $today =  $this->translateDayName($d->format('l'));
+        echo $today;
+        return $query->where('jours_de_semaine','like',"%{$today}%");
+    }
+    public function scopeValidSeances( $query)
+    {
+        $date = now();
+        return $query->whereDate('date_debut','<=',$date)->whereDate('date_fin','>=',$date);
+//        echo $date;
+    }
+    public function scopeActive($query){
+        return Seance::whereActive(1);
+    }
+    public function scopeSeancePasse($query){
+        return Seance::whereSeancePasse(1);
+    }
+    public function scopeSeancesDuProf($query,$idProf){
+        return $query->where('prof_id',$idProf);
+    }
+    public function translateDayName($dayname):string{
+        $arrEN = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
+        $arrFR = ['Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi','Dimanche'];
+        $i=0;
+        foreach ($arrEN as $day) {
+            if($day==$dayname){
+                return $arrFR[$i];
+            }
+            $i++;
+        }
     }
 }

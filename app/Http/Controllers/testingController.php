@@ -14,21 +14,27 @@ class testingController extends Controller
 //        $etudiant = new Etudiant();
 //        $etudiant->name = "Ahmed";
 //        $etudiant->email="ahmed@gmail.com";
-//        $etudiant->password="koko123123";
+//        $etudiant->password= Hash::make("lol123123");
 //        $etudiant->cin = "CD45678";
 //        $etudiant->email_parent = "parent@g.com";
 //        $etudiant->cne = "N5745678";
 //
-//        $etudiant->save();
-        $f = Filiere::find(1);
-        $all =  $f->etudiants()->get();
-        foreach ($all as $e) {
-            echo $e;
-        }
-
 //        $fil = new Filiere();
 //        $fil->niveau = "4 eme Annee";
 //        $fil->intitule="4ISI";
+//        $fil->save();
+//        $f = Filiere::find(1);
+//        $etudiant->filiere_id = 1;
+//        $etudiant->save();
+
+//        $etudiant->save();
+//        $f = Filiere::find(1);
+//        $all =  $f->etudiants()->get();
+//        foreach ($all as $e) {
+//            echo $e;
+//        }
+
+
 
 //        $fil = Filiere::create([
 //            'intitule' => '4ISI1',
@@ -49,19 +55,31 @@ class testingController extends Controller
     }
 
     public function test_Filiere_Prof(){
+            $f2 = new Filiere();
+            $f2->intitule="STID";
+            $f2->niveau="2 eme annee";
+            $f2->save();
+
+
 //            $p = new Prof();
 //            $p->name="ommor";
-//            $p->email="ommor@gmail.com";
+//            $p->email="ommoro@gmail.com";
 //            $p->cin = "CD456789";
-//            $p->password=Hash::make("ommor123123");
+//            $p->password=Hash::make("lol123123");
 //            $p->save();
-//            $f = Filiere::find(1);
-//            $p->filieres()->save($f);
+        $p = Prof::find(1);
+        $f3 = Filiere::find(1);
+            $f = Filiere::find(1);
+            $p->filieres()->save($f);
+            $p->filieres()->save($f2);
+            $p->filieres()->save($f3);
+
+
 
             $p = Prof::find(1);
             $fs = $p->filieres()->get();
         foreach ($fs as $f) {
-                    echo $f->etudiants()->get();
+                    echo $f->seances()->get();
             }
 
 

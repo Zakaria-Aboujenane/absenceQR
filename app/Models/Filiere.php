@@ -34,7 +34,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Filiere extends Model
 {
     use HasFactory;
-
+    
     protected $fillable = [
         'intitule','niveau'
     ];

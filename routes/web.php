@@ -43,10 +43,12 @@ Route::post('/register/etudiant', [RegisterController::class, 'createEtudiant'])
 
 Route::group(['middleware' => 'auth:admin'], function () {
     Route::view('/admin', 'admin');
+    Route::get('/admin/seances',[\App\Http\Controllers\SeanceController::class,'listDesSeances']);
 });
 
 Route::group(['middleware' => 'auth:prof'], function () {
     Route::view('/prof', 'prof');
+    Route::get('/prof/seances',[\App\Http\Controllers\SeanceController::class,'listSeancesParProf']);
 });
 
 Route::group(['middleware' => 'auth:etudiant'], function () {

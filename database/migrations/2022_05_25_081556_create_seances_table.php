@@ -27,6 +27,10 @@ return new class extends Migration
                 ->constrained('filieres')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
+            $table->foreignId('prof_id')
+                ->constrained('profs')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
             $table->timestamps();
         });
     }

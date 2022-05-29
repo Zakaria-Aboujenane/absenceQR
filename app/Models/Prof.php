@@ -37,6 +37,8 @@ use Laravel\Sanctum\HasApiTokens;
  * @mixin \Eloquent
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Filiere[] $filieres
  * @property-read int|null $filieres_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|Prof[] $seances
+ * @property-read int|null $seances_count
  */
 class Prof extends Authenticatable
 {
@@ -53,6 +55,10 @@ class Prof extends Authenticatable
     public function filieres()
     {
         return $this->belongsToMany(Filiere::class,'profs_filieres');
+    }
+    public function seances()
+    {
+        return $this->hasMany(Prof::class);
     }
 
 
