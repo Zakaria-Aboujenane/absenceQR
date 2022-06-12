@@ -54,9 +54,9 @@ class LoginController extends Controller
             $request->session()->regenerate();
             return redirect('/admin')->with('message','Logged in ');
         }
-        echo "noope";
-//        return back()->withInput($request->only('email', 'remember'))
-//            ->withErrors(['email'=>'invalid email'])->onlyInput('email');
+
+        return back()->withInput($request->only('email', 'remember'))
+            ->withErrors(['email'=>'invalid email'])->onlyInput('email');
     }
 
 //    Prof loggin:
@@ -70,10 +70,13 @@ class LoginController extends Controller
             'email'   => ['required','email'],
             'password' => 'required'
         ]);
-
-        if (Auth::guard('prof')->attempt($formFields)) {
+        $profL = Auth::guard('prof')->attempt($formFields);
+        if ($profL) {
             $request->session()->regenerate();
-            return redirect('/prof')->with('message','Logged in ');
+            $prof = Auth::guard('prof')->user();
+            $seances = Seance::seancesDuProf($prof->id);
+
+            return view('/prof');
         }
         return back()->withInput($request->only('email', 'remember'))
             ->withErrors(['email'=>'invalid email'])->onlyInput('email');
