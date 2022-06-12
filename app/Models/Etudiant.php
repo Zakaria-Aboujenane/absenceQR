@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 
 
 /**
@@ -47,7 +48,7 @@ use Laravel\Sanctum\HasApiTokens;
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Seance[] $seances
  * @property-read int|null $seances_count
  */
-class Etudiant extends Authenticatable
+class Etudiant extends Authenticatable implements JWTSubject
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -57,7 +58,7 @@ class Etudiant extends Authenticatable
     ];
 
     protected $hidden = [
-        'password', 'remember_token',
+        'password',
     ];
 
     public function filiere()
@@ -67,5 +68,15 @@ class Etudiant extends Authenticatable
     public function seances()
     {
         return $this->belongsToMany(Seance::class,'absence');
+    }
+
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+
+    public function getJWTCustomClaims()
+    {
+        return [];
     }
 }

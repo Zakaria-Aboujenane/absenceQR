@@ -40,6 +40,12 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+
+        'api' =>[
+            'driver'=>'jwt',
+            'provider' => 'users',
+            'hash'=>false
+        ],
         'admin' => [
             'driver' => 'session',
             'provider' => 'admins',
@@ -52,6 +58,10 @@ return [
             'driver' => 'session',
             'provider' => 'etudiants',
         ],
+        'etudiant-api' =>[
+            'driver'=>'jwt',
+            'provider'=>'etudiants',
+        ]
     ],
 
     /*

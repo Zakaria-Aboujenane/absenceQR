@@ -11,9 +11,12 @@ class SeanceController extends Controller
 {
     //
     public function listDesSeances(){
-//        $seances  = Seance::all();
-//        return view('seances.seances',['seances'=>$seances]);
-
+        $seances  = Seance::all();
+        return view('seances.seances',['seances'=>$seances]);
+    }
+    public function listDesSeancesParDate($date){
+        $seances  = Seance::whereDate('date_debut','=',$date);
+        return view('seances.seances',['seances'=>$seances]);
     }
     public function listSeancesParFilire($idFil){
         if(auth('prof') != null ){

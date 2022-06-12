@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\auth\LoginController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -13,7 +14,15 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+//here u need api auth
+//Route::group(['middleware'=>'auth:api'],function (){
+//
+//});
+Route::post('login-etudiant',[LoginController::class,'login_etudiant_api']);
+//Route::group(['middleware' => 'api'], function($router) {
+//
+//});
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+//Route::group(['middleware'=>'checkpassword'],function(){
+////    Route::post('login',[LoginController::class,'loginEtudiant'])->middleware('auth.guard:etudiant-api');
+//});
