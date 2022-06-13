@@ -72,7 +72,7 @@ class LoginController extends Controller
             'email'   => ['required','email'],
             'password' => 'required'
         ]);
-        $profL = Auth::guard('prof')->attempt($formFields);
+        $profL = Auth::guard('prof')->attempt($formFields);;
         if ($profL) {
             $request->session()->regenerate();
             $prof = Auth::guard('prof')->user();
