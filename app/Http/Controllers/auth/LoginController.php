@@ -142,15 +142,11 @@ class LoginController extends Controller
 
             $etudiant = Auth::guard('etudiant-api')->user();
             $etudiant->api_token = $token;
-//            retourner l'etudiant avec sa filiere et ses seances:
             $filiere = Filiere::find($etudiant->filiere_id);
             unset($filiere->updated_at);
             unset($filiere->created_at);
             $etudiant->fil= $filiere;
             $seances = $filiere->seances()->get();
-//            $prof = Prof::where('id',$seances->prof_id)->get();
-//            $seances->prof = $prof;
-
             foreach ($seances as $seance){
                 $prof = Prof::where('id',$seance->prof_id)->first();
                 unset($prof->created_at);
@@ -172,9 +168,5 @@ class LoginController extends Controller
         } catch (\Exception $ex) {
             return $this->returnError($ex->getCode(), $ex->getMessage());
         }
-    }
-    public function unsetProps(Seance $seance,Etudiant $etudiant){
-
-
     }
 }
