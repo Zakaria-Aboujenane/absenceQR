@@ -31,7 +31,7 @@ class EtudiantAbsenceController extends Controller
         $etudiantsPresents =  Etudiant::EstPresentDans($id_seance);
         $tous_les_etudiants = $filiere->etudiants()->get();
         $etudiants_absents = array();
-        
+
         foreach ($tous_les_etudiants as $etudiant){
             $est_present = false;
 
