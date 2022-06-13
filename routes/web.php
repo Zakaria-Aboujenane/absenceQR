@@ -49,8 +49,7 @@ Route::group(['middleware' => 'auth:admin'], function () {
 Route::group(['middleware' => 'auth:prof'], function () {
     Route::view('/prof', 'prof');
 //    Route::get('/prof/seances',[\App\Http\Controllers\SeanceController::class,'listSeancesParProf']);
-    Route::get('prof/qrcodepage/{id_seance}',[\App\Http\Controllers\auth\ProfController::class,'getQrCodePage'])
-    ->name('qr_code_page');
+    Route::get('prof/qrcodepage/{id_seance}',[\App\Http\Controllers\auth\ProfController::class,'getQrCodePage'])->name('qr_code_page');
     Route::get('/ajax-request',[\App\Http\Controllers\auth\ProfController::class,'getQrCode']);
 });
 
@@ -64,4 +63,9 @@ Route::get('/logout', [LoginController::class,'logout'])->name('logout');
 //testing:
 Route::get('/test',[\App\Http\Controllers\testingController::class,'test_Filiere_Prof']);
 
+Route::get('/AddSeances',[\App\Http\Controllers\AdminController::class, 'AddSeance']);
+Route::post('/AddSeances',[\App\Http\Controllers\AdminController::class, 'AddSeance']);
 
+
+Route::get('/AddSeances/{name}/{nbr_ocr}/{prof}/{filier}',[\App\Http\Controllers\AdminController::class, 'AddSeances']);
+Route::post('/AddSeances/{name}/{nbr_ocr}/{prof}/{filier}',[\App\Http\Controllers\AdminController::class, 'AddSeances']);
