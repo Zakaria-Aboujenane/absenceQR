@@ -71,9 +71,13 @@ class Seance extends Model
     {
         return $this->belongsTo(Prof::class);
     }
-    public function etudiants()
+    public function absence()
     {
         return $this->belongsToMany(Etudiant::class,'absence');
+    }
+
+    public function marquerAbsence(){
+
     }
     public function scopeToday($query){
 

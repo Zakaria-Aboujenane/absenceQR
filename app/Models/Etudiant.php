@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -50,6 +51,7 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
  */
 class Etudiant extends Authenticatable implements JWTSubject
 {
+    public static int $static_id = -1;
     use HasApiTokens, HasFactory, Notifiable;
 
     protected $guard = 'etudiant';
@@ -65,11 +67,18 @@ class Etudiant extends Authenticatable implements JWTSubject
     {
         return $this->belongsTo(Filiere::class);
     }
-    public function seances()
+    public function absence()
     {
         return $this->belongsToMany(Seance::class,'absence');
     }
 
+    public function scopeEstPresentDans($query,$id_seance){
+        self::$static_id = $id_seance;
+
+        return Etudiant::whereHas('absence', function ($query) {
+            $query->where('seance_id', self::$static_id );
+        })->get();
+    }
     public function getJWTIdentifier()
     {
         return $this->getKey();
