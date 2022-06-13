@@ -98,7 +98,10 @@ class Seance extends Model
         return Seance::whereSeancePasse(1);
     }
     public function scopeSeancesDuProf($query,$idProf){
-        return $query->where('prof_id',$idProf);
+        $mytime = Carbon::now();
+        $str_time = date('Y-m-d',strtotime($mytime->toDateTimeString()))."";
+//        dd($str_time);
+        return Seance::where('prof_id',$idProf)->whereDate('date_debut','=',$str_time);
     }
     public function translateDayName($dayname):string{
         $arrEN = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
