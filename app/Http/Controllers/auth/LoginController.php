@@ -4,7 +4,9 @@ namespace App\Http\Controllers\auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Traits\GeneralTrait;
+use App\Models\Etudiant;
 use App\Models\Filiere;
+use App\Models\Prof;
 use App\Models\Seance;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
@@ -142,14 +144,37 @@ class LoginController extends Controller
             $etudiant->api_token = $token;
 //            retourner l'etudiant avec sa filiere et ses seances:
             $filiere = Filiere::find($etudiant->filiere_id);
-            $etudiant->fil = $filiere;
-            $seances = $filiere->seances();
-            $etudiant->seances = $seances;
+            unset($filiere->updated_at);
+            unset($filiere->created_at);
+            $etudiant->fil= $filiere;
+            $seances = $filiere->seances()->get();
+//            $prof = Prof::where('id',$seances->prof_id)->get();
+//            $seances->prof = $prof;
 
-            return $this->returnData('admin', $etudiant);
+            foreach ($seances as $seance){
+                $prof = Prof::where('id',$seance->prof_id)->first();
+                unset($prof->created_at);
+                unset($prof->updated_at);
+                unset($prof->email_verified_at);
+                $seance->prof = $prof;
+                unset($seance->prof_id);
+                unset($seance->filiere_id);
+                unset($seance->created_at);
+                unset($seance->updated_at);
+            }
+            $etudiant->seances = $seances;
+            unset($etudiant->email_verified_at);
+            unset($etudiant->created_at);
+            unset($etudiant->updated_at);
+            unset($etudiant->filiere_id);
+            return $this->returnData('Etudiant', $etudiant);
 
         } catch (\Exception $ex) {
             return $this->returnError($ex->getCode(), $ex->getMessage());
         }
+    }
+    public function unsetProps(Seance $seance,Etudiant $etudiant){
+
+
     }
 }
