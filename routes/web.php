@@ -51,6 +51,7 @@ Route::group(['middleware' => 'auth:prof'], function () {
 //    Route::get('/prof/seances',[\App\Http\Controllers\SeanceController::class,'listSeancesParProf']);
     Route::get('prof/qrcodepage/{id_seance}',[\App\Http\Controllers\auth\ProfController::class,'getQrCodePage'])
     ->name('qr_code_page');
+    Route::get('/ajax-request',[\App\Http\Controllers\auth\ProfController::class,'getQrCode']);
 });
 
 Route::group(['middleware' => 'auth:etudiant'], function () {

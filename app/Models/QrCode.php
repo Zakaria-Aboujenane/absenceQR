@@ -14,4 +14,7 @@ class QrCode extends Model
        'qr_code_token'
         ];
 
+    public function scopeSetqrtoken($query,$qr_string){
+            $query->where('id','=',1)->update(['qr_code_token'=>$qr_string]);
+    }
 }
