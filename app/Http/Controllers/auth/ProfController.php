@@ -3,28 +3,21 @@
 namespace App\Http\Controllers\auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\QrCode;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class ProfController extends Controller
 {
-    public function showProfLoginForm()
-    {
-        return view('auth.login', ['url' => 'prof']);
-    }
-    public function profLogin(Request $request)
-    {
-        $formFields = $request->validate([
-            'email'   => ['required','email'],
-            'password' => 'required'
-        ]);
 
-        if ($prof = Auth::guard('prof')->attempt($formFields)) {
-            $request->session()->regenerate();
-//            return redirect('/prof')->with('message','Logged in ')->with('prof');
-            return $prof;
-        }
-        return back()->withInput($request->only('email', 'remember'))
-            ->withErrors(['email'=>'invalid email'])->onlyInput('email');
+    public function getQrCodePage(int $id_Seance){
+            $qrcode = $this->getQrCode($id_Seance);
+        return view("qrcodepage", compact('qrcode'));
+    }
+    public function getQrCode(int $id_Seance){
+        $qrcode_string = QrCode::all()->first();
+        $qrcode_string = $id_Seance."|".$qrcode_string;
+        $qrcode = \SimpleSoftwareIO\QrCode\Facades\QrCode::size(200)->generate($qrcode_string);
+        return $qrcode;
     }
 }

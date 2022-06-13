@@ -17,8 +17,12 @@
 
     ?>
     user:  {{  $user->name }}
+    <ul>
     @foreach($seances as $s)
-        <p>{{$s->matiere}}</p>
+       <li><a href="{{URL::route('qr_code_page', [$s->id] )}}">{{$s->matiere}}</a></li>
     @endforeach
+    </ul>
+
+
 
 @endsection
