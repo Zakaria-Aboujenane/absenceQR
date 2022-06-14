@@ -48,21 +48,19 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
  * @property-read \App\Models\Filiere|null $filiere
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Seance[] $seances
  * @property-read int|null $seances_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Seance[] $absence
+ * @property-read int|null $absence_count
+ * @method static Builder|Etudiant estPresentDans($id_seance)
  */
 class Etudiant extends Authenticatable implements JWTSubject
 {
     public static int $static_id = -1;
     use HasApiTokens, HasFactory, Notifiable;
-
     protected $guard = 'etudiant';
     protected $fillable = [
         'name', 'email', 'password','email_parent','cne','cin','filiere_id'
     ];
-
-    protected $hidden = [
-        'password',
-    ];
-
+    protected $hidden;
     public function filiere()
     {
         return $this->belongsTo(Filiere::class);
@@ -71,7 +69,6 @@ class Etudiant extends Authenticatable implements JWTSubject
     {
         return $this->belongsToMany(Seance::class,'absence');
     }
-
     public function scopeEstPresentDans($query,$id_seance){
         self::$static_id = $id_seance;
 
@@ -79,11 +76,15 @@ class Etudiant extends Authenticatable implements JWTSubject
             $query->where('seance_id', self::$static_id );
         })->get();
     }
+    public function scopeIsEtudiantPresent($query,$id_seance,$id_etudiant){
+        return  Etudiant::whereHas('absence', function ($query) use ($id_etudiant, $id_seance) {
+            $query->where('seance_id', $id_seance );
+        })->get();
+    }
     public function getJWTIdentifier()
     {
         return $this->getKey();
     }
-
     public function getJWTCustomClaims()
     {
         return [];

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\StatsController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use \App\Http\Controllers\auth\LoginController;
@@ -15,7 +16,9 @@ use \App\Http\Controllers\auth\RegisterController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+if(version_compare(PHP_VERSION, '7.2.0', '>=')) {
+    error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
+}
 Route::get('/', function () {
     return view('index');
 })->name('index');
@@ -49,8 +52,10 @@ Route::group(['middleware' => 'auth:admin'], function () {
 Route::group(['middleware' => 'auth:prof'], function () {
     Route::view('/prof', 'prof');
 //    Route::get('/prof/seances',[\App\Http\Controllers\SeanceController::class,'listSeancesParProf']);
-    Route::get('prof/qrcodepage/{id_seance}',[\App\Http\Controllers\auth\ProfController::class,'getQrCodePage'])->name('qr_code_page');
+    Route::get('prof/qrcodepage/{id_seance}/{id_filiere}',[\App\Http\Controllers\auth\ProfController::class,'getQrCodePage'])->name('qr_code_page');
     Route::get('/ajax-request',[\App\Http\Controllers\auth\ProfController::class,'getQrCode']);
+    Route::get('/fin_seance',[\App\Http\Controllers\EtudiantAbsenceController::class,'ajouterLesAbsents']);
+
 });
 
 Route::group(['middleware' => 'auth:etudiant'], function () {
@@ -69,3 +74,6 @@ Route::post('/AddSeances',[\App\Http\Controllers\AdminController::class, 'AddSea
 
 Route::get('/AddSeances/{name}/{nbr_ocr}/{prof}/{filier}',[\App\Http\Controllers\AdminController::class, 'AddSeances']);
 Route::post('/AddSeances/{name}/{nbr_ocr}/{prof}/{filier}',[\App\Http\Controllers\AdminController::class, 'AddSeances']);
+
+
+Route::get('testing',[StatsController::class,'nb_fils']);
