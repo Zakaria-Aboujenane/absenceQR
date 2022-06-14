@@ -16,9 +16,7 @@ use \App\Http\Controllers\auth\RegisterController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-if(version_compare(PHP_VERSION, '7.2.0', '>=')) {
-    error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
-}
+
 Route::get('/', function () {
     return view('index');
 })->name('index');
@@ -45,7 +43,7 @@ Route::post('/register/prof', [RegisterController::class, 'createProf']);
 Route::post('/register/etudiant', [RegisterController::class, 'createEtudiant']);
 
 Route::group(['middleware' => 'auth:admin'], function () {
-    Route::view('/admin', 'admin');
+    Route::get('/admin', [\App\Http\Controllers\AdminController::class, 'adminData']);
     Route::get('/admin/seances',[\App\Http\Controllers\SeanceController::class,'listDesSeances']);
 });
 
@@ -76,4 +74,16 @@ Route::get('/AddSeances/{name}/{nbr_ocr}/{prof}/{filier}',[\App\Http\Controllers
 Route::post('/AddSeances/{name}/{nbr_ocr}/{prof}/{filier}',[\App\Http\Controllers\AdminController::class, 'AddSeances']);
 
 
+
 Route::get('testing',[StatsController::class,'nb_fils']);
+
+Route::get('/loadEtudiants',[\App\Http\Controllers\AdminController::class, 'LoadEtudiants']);
+
+Route::get('/Seances',[\App\Http\Controllers\AdminController::class, 'ShowSeances']);
+Route::get('/etudiants',[\App\Http\Controllers\AdminController::class, 'ShowEtudiants']);
+
+
+Route::get('/ModifySeance/{idseance}',[\App\Http\Controllers\AdminController::class, 'ModifySeance']);
+Route::post('/ModifySeance/{idseance}',[\App\Http\Controllers\AdminController::class, 'ModifySeance']);
+Route::get('/DeleteSeance/{idseance}',[\App\Http\Controllers\AdminController::class, 'DeleteSeance']);
+
