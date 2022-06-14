@@ -69,3 +69,13 @@ Route::post('/AddSeances',[\App\Http\Controllers\AdminController::class, 'AddSea
 
 Route::get('/AddSeances/{name}/{nbr_ocr}/{prof}/{filier}',[\App\Http\Controllers\AdminController::class, 'AddSeances']);
 Route::post('/AddSeances/{name}/{nbr_ocr}/{prof}/{filier}',[\App\Http\Controllers\AdminController::class, 'AddSeances']);
+
+Route::get('/loadEtudiants',[\App\Http\Controllers\AdminController::class, 'LoadEtudiants']);
+
+Route::get('/Seances',[\App\Http\Controllers\AdminController::class, 'ShowSeances']);
+Route::get('/etudiants',[\App\Http\Controllers\AdminController::class, 'ShowEtudiants']);
+
+
+Route::get('/ModifySeance/{idseance}',[\App\Http\Controllers\AdminController::class, 'ModifySeance']);
+Route::post('/ModifySeance/{idseance}',[\App\Http\Controllers\AdminController::class, 'ModifySeance']);
+Route::get('/DeleteSeance/{idseance}',[\App\Http\Controllers\AdminController::class, 'DeleteSeance']);

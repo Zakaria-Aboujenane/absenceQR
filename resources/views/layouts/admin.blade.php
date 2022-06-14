@@ -17,7 +17,7 @@
 
   <!-- Custom styles for this template-->
   <link href="/css/sb-admin-2.min.css" rel="stylesheet">
-
+  <link href="/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 </head>
 
 <body id="page-top">
@@ -64,7 +64,7 @@
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Options:</h6>
             <a class="collapse-item" href="/AddSeances">Ajouter Seances</a>
-            <a class="collapse-item" href="/ShowSeances">Liste des Seances</a>
+            <a class="collapse-item" href="/Seances">Liste des Seances</a>
           </div>
         </div>
       </li>
@@ -78,9 +78,6 @@
         <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Custom Utilities:</h6>
-            <a class="collapse-item" href="utilities-color.html">Colors</a>
-            <a class="collapse-item" href="utilities-border.html">Borders</a>
-            <a class="collapse-item" href="utilities-animation.html">Animations</a>
             <a class="collapse-item" href="utilities-other.html">Other</a>
           </div>
         </div>
@@ -102,14 +99,9 @@
         </a>
         <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Login Screens:</h6>
-            <a class="collapse-item" href="login.html">Login</a>
-            <a class="collapse-item" href="register.html">Register</a>
-            <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
-            <div class="collapse-divider"></div>
-            <h6 class="collapse-header">Other Pages:</h6>
-            <a class="collapse-item" href="404.html">404 Page</a>
-            <a class="collapse-item" href="blank.html">Blank Page</a>
+            <h6 class="collapse-header">Option:</h6>
+            <a class="collapse-item" href="/etudiants">Etudiants</a>
+            
           </div>
         </div>
       </li>
@@ -220,7 +212,7 @@
       <footer class="sticky-footer bg-white">
         <div class="container my-auto">
           <div class="copyright text-center my-auto">
-            <span>Copyright &copy; Your Website 2019</span>
+            <span>Copyright &copy; Your Website 2022</span>
           </div>
         </div>
       </footer>
@@ -255,7 +247,7 @@
       </div>
     </div>
   </div>
-
+ 
   <!-- Bootstrap core JavaScript-->
   <script src="/vendor/jquery/jquery.min.js"></script>
   <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -281,6 +273,7 @@
    <!-- Page level custom scripts -->
    <script src="/js/demo/datatables-demo.js"></script>
  
+   @yield('content2')
 
 </body>
 

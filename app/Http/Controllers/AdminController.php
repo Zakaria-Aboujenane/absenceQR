@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use \App\Models\Prof;
 use \App\Models\Filiere;
 use \App\Models\Seance;
+use \App\Models\Etudiant;
+
 use Carbon\Carbon;
 
 class AdminController extends Controller
@@ -56,6 +58,54 @@ class AdminController extends Controller
         $seance = Seance::all();
         $arr = array('seance' => $seance);
         return view('admin',$arr);
+    }
+    public function ShowSeances(){
+        $seance = Seance::all();
+        $arr = array('seance' => $seance);
+        return view('seances.seances',$arr);
+    }
+
+    public function ShowEtudiants(){
+        $etudiant = Etudiant::all();
+        $arr = array('etudiant' => $etudiant);
+        return view('etudiant',$arr);
+    }
+
+    public function LoadEtudiants(){
+        
+
+
+        return redirect('/admin');
+    }
+    public function ModifySeance(Request $request, $idseance)
+    {
+
+        if ($request->isMethod('post')) {
+            $newseance = Seance::find($idseance);
+            $newseance->matiere=$request->input('name');
+            $newseance->filiere_id=$request->input('filier');
+            $newseance->prof_id=$request->input('prof');
+            $newseance->date_debut=$request->input('date');
+            $newseance->heure_debut=$request->input('heure');
+            $newseance->ref_salle=$request->input('salle');
+            $newseance->save();
+            return redirect("/Seances");
+        }
+
+        $profs = Prof::all();
+        $filiers = Filiere::all();
+        $arrDD = array('profs' => $profs , 'filiers'=> $filiers);
+        $seance = seance::find($idseance);
+        $arr = array('seance' => $seance);
+        return view('seances.ModifySeance', $arr , $arrDD);
+    }
+
+    
+    public function DeleteSeance($idseance)
+    {
+        $seance = Seance::find($idseance);
+        $seance->delete();
+        return redirect(url()->previous());
     }
 
 }
