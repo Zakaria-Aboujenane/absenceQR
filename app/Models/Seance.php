@@ -65,7 +65,7 @@ class Seance extends Model
 
     public function filiere()
     {
-        return $this->belongsTo(Seance::class);
+        return $this->belongsTo(Filiere::class);
     }
     public function prof()
     {

@@ -52,4 +52,10 @@ class AdminController extends Controller
         return view('addSeances',$arr);
     }
 
+    public function adminData(){
+        $seance = Seance::all();
+        $arr = array('seance' => $seance);
+        return view('admin',$arr);
+    }
+
 }

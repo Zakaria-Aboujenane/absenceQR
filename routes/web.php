@@ -42,7 +42,7 @@ Route::post('/register/prof', [RegisterController::class, 'createProf']);
 Route::post('/register/etudiant', [RegisterController::class, 'createEtudiant']);
 
 Route::group(['middleware' => 'auth:admin'], function () {
-    Route::view('/admin', 'admin');
+    Route::get('/admin', [\App\Http\Controllers\AdminController::class, 'adminData']);
     Route::get('/admin/seances',[\App\Http\Controllers\SeanceController::class,'listDesSeances']);
 });
 
