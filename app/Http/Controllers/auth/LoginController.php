@@ -163,10 +163,23 @@ class LoginController extends Controller
             unset($etudiant->created_at);
             unset($etudiant->updated_at);
             unset($etudiant->filiere_id);
-            return $this->returnData('Etudiant', $etudiant);
+            $myE = Etudiant::find($etudiant->id);
+            $etudiantA = array(
+                "id"=>$etudiant->id,
+                "name"=>$etudiant->name,
+                "cne"=>$etudiant->cne,
+                "cin"=>$etudiant->cin,
+                "filiere_id"=>$myE->filiere_id
+
+            );
+           return $this->returnData('etudiant',$etudiantA);
+
 
         } catch (\Exception $ex) {
             return $this->returnError($ex->getCode(), $ex->getMessage());
         }
     }
+
+
+
 }

@@ -12,9 +12,11 @@ use Illuminate\Support\Str;
 class ProfController extends Controller
 {
 
-    public function getQrCodePage(int $id_Seance){
+    public function getQrCodePage(int $id_Seance,int $id_filiere){
             $qrcode = $this->getQrCode($id_Seance);
-        return view("qrcodepage", compact('qrcode'));
+            $s=Seance::find($id_Seance);
+            $s->active=1;
+        return view("qrcodepage", compact('qrcode','id_filiere','id_Seance'));
     }
     public function getQrCode(){
         $qrcode_string =$this->regenerateQrCode();
