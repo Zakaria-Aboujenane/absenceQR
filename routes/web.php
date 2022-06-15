@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\EtudiantAbsenceController;
 use App\Http\Controllers\StatsController;
+use App\Http\Controllers\testingController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use \App\Http\Controllers\auth\LoginController;
@@ -92,3 +93,5 @@ Route::get('/filiers',[\App\Http\Controllers\AdminController::class, 'ShowFilier
 
 Route::get('/etudiants_par_seance/{idSeance}',[EtudiantAbsenceController::class,'getEtudiantsAbsentsParSeance']);
 Route::get('/seances_par_etudiant/{idEtudiant}',[EtudiantAbsenceController::class,'getEtudiantSeancesAbsParEtudiant']);
+
+Route::get('/testmail/{email_parent}',[testingController::class,'sendMailTest']);

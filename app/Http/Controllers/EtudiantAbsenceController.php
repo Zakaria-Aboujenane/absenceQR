@@ -174,4 +174,7 @@ class EtudiantAbsenceController extends Controller
 
     }
 
+
+
+
 }

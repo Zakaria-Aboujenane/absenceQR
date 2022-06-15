@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ParentMailler;
 use App\Models\Etudiant;
 use App\Models\Filiere;
 use App\Models\Prof;
@@ -86,5 +87,11 @@ class testingController extends Controller
 
 
 
+    }
+
+    public function sendMailTest($email_parent){
+
+        $data = ['idSeance'=>1,'idEtudiant'=>1];
+        \Mail::to($email_parent)->send(new ParentMailler($data));
     }
 }
