@@ -34,7 +34,7 @@
 
                             <td>
                                 <center>
-                                    <a class="btn btn-info" class="graph" href="{{url('/ShowEtdAbsence/'.$etd->id)}}"><i class="fa fa-list-ul"></i></a>
+                                    <a class="btn btn-info" class="graph" href="{{url('/seances_par_etudiant/'.$etd->id)}}"><i class="fa fa-list-ul"></i></a>
                                 </center>
                             </td>
                         </tr>
