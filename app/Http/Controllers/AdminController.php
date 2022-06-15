@@ -8,9 +8,12 @@ use \App\Models\Filiere;
 use \App\Models\Seance;
 use \App\Models\Etudiant;
 use Carbon\Carbon;
+use Nette\Utils\DateTime;
+
 
 class AdminController extends Controller
 {
+    
     public function AddSeance(Request $request){
 
         if($request->isMethod('post')){
@@ -54,9 +57,11 @@ class AdminController extends Controller
     }
 
     public function adminData(){
+        
+        $arrC = $this->absence_par_filiere_annuel();
         $seance = Seance::all();
         $arr = array('seance' => $seance);
-        return view('admin',$arr);
+        return view('admin',$arr,$arrC);
     }
     public function ShowSeances(){
         $seance = Seance::all();
@@ -117,5 +122,36 @@ class AdminController extends Controller
         $seance->delete();
         return redirect()->back();
     }
+    public function absence_par_filiere_annuel($year = -1){
+        if($year == -1){
+            $year = date('Y');
+        }
+        $start = new DateTime('first day of January'.$year);
+        $end = new DateTime('last day of December'.$year);
+        $filieres  = Filiere::get();
+        $resultat_f = array();
+        $resultat_p = array();
+        foreach ($filieres as $f){
+            $seances = Seance::betweenDates($start,$end)->where(function($q) use ($f) {
+                $q->byFiliere($f->id);
+                $q->SeancePasse();
+            })->get();
+            $nbr_abs=0;
+            $nbr_pres=0;
+            $nbr_seances=0;
+            foreach ($seances as $s){
+                $nbr_abs += $this->nbr_absence_par_seance($s->id);
+                $nbr_pres += $this->nbr_presence_par_seance($s->id);
+                $nbr_seances +=$nbr_abs+$nbr_pres;
+            }
+            if($nbr_seances >0){
+                $pourc = number_format(($nbr_pres*100)/$nbr_seances, 2, '.', '') ;
+                array_push($resultat_f,[
+                    "filiere"=>$f->intitule,]);
+                array_push($resultat_p,["pourcentages"=>(float)$pourc]);
+            }
+        }
+        return ["result_f"=>$resultat_f,"result_p"=>$resultat_p];
 
+    }
 }

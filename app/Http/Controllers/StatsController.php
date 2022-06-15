@@ -53,14 +53,15 @@ class StatsController extends Controller
      * selon un mois donne
      * retourner un tableau comme : [ "4ISI"=>30,"3ISI"=>40 ]=> 30 est le pourcentage de presence
      */
-    public function absence_par_filiere_annuel($year = -1){
+     public function absence_par_filiere_annuel($year = -1){
         if($year == -1){
             $year = date('Y');
         }
         $start = new DateTime('first day of January'.$year);
         $end = new DateTime('last day of December'.$year);
         $filieres  = Filiere::get();
-        $resultat = array();
+        $resultat_f = array();
+        $resultat_p = array();
         foreach ($filieres as $f){
             $seances = Seance::betweenDates($start,$end)->where(function($q) use ($f) {
                 $q->byFiliere($f->id);
@@ -76,13 +77,12 @@ class StatsController extends Controller
             }
             if($nbr_seances >0){
                 $pourc = number_format(($nbr_pres*100)/$nbr_seances, 2, '.', '') ;
-                array_push($resultat,array(
-                    "filiere"=>$f->intitule,
-                    "pourcentages"=>(float)$pourc
-                ));
+                array_push($resultat_f,[
+                    "filiere"=>$f->intitule,]);
+                array_push($resultat_p,["pourcentages"=>(float)$pourc]);
             }
         }
-        return $resultat;
+        return ["result_f"=>$resultat_f,"result_p"=>$resultat_p];
 
     }
     //nbr de filieres :

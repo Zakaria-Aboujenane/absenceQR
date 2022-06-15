@@ -94,7 +94,7 @@
     <div class="row">
 
       <!-- Bar Chart -->
-      <div class="col-xl-8 col-lg-7">
+      <div class="col-xl-12 col-lg-7">
         <div class="card shadow mb-4">
           <!-- Card Header - Dropdown -->
           <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
@@ -121,46 +121,7 @@
         </div>
       </div>
 
-      <!-- Pie Chart -->
-      <div class="col-xl-4 col-lg-5">
-        <div class="card shadow mb-4">
-          <!-- Card Header - Dropdown -->
-          <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-            <h6 class="m-0 font-weight-bold text-primary">Revenue Sources</h6>
-            <div class="dropdown no-arrow">
-              <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-              </a>
-              <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
-                <div class="dropdown-header">Type de données:</div>
-                <a class="dropdown-item" href="#">Ce Jour</a>
-                <a class="dropdown-item" href="#">Ce Mois</a>
-                <a class="dropdown-item" href="#">Ce Semester</a>
-                <a class="dropdown-item" href="#">Cette Année</a>
-              </div>
-            </div>
-          </div>
-          <!-- Card Body -->
-          <div class="card-body">
-            <div class="chart-pie pt-4 pb-2">
-              <canvas id="myPieChart"></canvas>
-            </div>
-            <div class="mt-4 text-center small">
-              <span class="mr-2">
-                <i class="fas fa-circle text-primary"></i> Direct
-              </span>
-              <span class="mr-2">
-                <i class="fas fa-circle text-success"></i> Social
-              </span>
-              <span class="mr-2">
-                <i class="fas fa-circle text-info"></i> Referral
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
+      
     <!-- Content Row -->
     <div class="row">
                 <!-- Begin Page Content -->
@@ -174,6 +135,7 @@
             <div class="card-header py-3">
               <h6 class="m-0 font-weight-bold text-primary">Séances pour tous les filieres</h6>
             </div>
+            <div class="col-xl-12 col-lg-7">
             <div class="card-body">
               <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -218,8 +180,8 @@
                 </table>
               </div>
             </div>
+            </div>
           </div>
-
         </div>
         <!-- /.container-fluid -->
       <?php 
@@ -272,13 +234,13 @@
         var myBarChart1 = new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: ['4isi','C16'],
+                labels: @json($result_f),
                 datasets: [{
                     label: "totale",
                     backgroundColor: "#4e73df",
                     hoverBackgroundColor: "#2e59d9",
                     borderColor: "#4e73df",
-                    data:@json($arry),
+                    data:@json($result_p),
                 }],
             },
             options: {

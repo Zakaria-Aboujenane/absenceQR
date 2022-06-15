@@ -93,16 +93,11 @@
 
       <!-- Heading -->
       <div class="sidebar-heading">
-        Autres
       </div>
 
       <!-- Nav Item - Pages Collapse Menu -->
       <!-- Nav Item - Charts -->
-      <li class="nav-item">
-        <a class="nav-link" href="/stats">
-          <i class="fas fa-fw fa-chart-area"></i>
-          <span>Statistiques</span></a>
-      </li>
+
 
 
       <!-- Divider -->
