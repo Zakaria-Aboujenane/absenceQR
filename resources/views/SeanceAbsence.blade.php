@@ -16,6 +16,7 @@
                         <th>Seance</th>
                         <th>Date</th>
                         <th>Statut</th>
+                        <th>Action</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -30,6 +31,13 @@
                             <td>{{$s["matiere"]}}</td>
                             <td>{{$s['date_debut']}}</td>
                             <td>{{$etd["statusAbsence"]}}</td>
+                            <td>
+                                <center>
+                                    @if($etd['statusAbsence']=='absent')
+                                    <a class="btn btn-info" class="graph" href="{{url("/testmail/".$seance_id."/".$etd['id_etudiant'])}}"><i class="fa fa-envelope"></i></a>
+                                    @endif
+                                </center>
+                            </td>
                         </tr>
                         @endforeach
                     </tbody>
