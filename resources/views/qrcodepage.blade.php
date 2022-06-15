@@ -13,9 +13,13 @@
   <div id="qrCodePlace" > {{ $qrcode }} </div>
 <button id="reloadBtn" > reload QR code </button>
 
+  <form action="/fin_seance" method="GET">
+      <input type="hidden" name="id_seance" value="{{$id_Seance}}">
+      <input type="hidden" name="id_filiere" value="{{$id_filiere}}">
+      <button type="submit">Declarer le debut de seance (fin de marquage d'absence)</button>
+  </form>
+
 <script>
-
-
     function qr_code_generation() {
         $.ajax({
             url: "/ajax-request",

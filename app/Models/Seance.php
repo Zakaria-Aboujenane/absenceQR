@@ -50,6 +50,10 @@ use phpDocumentor\Reflection\Types\AbstractList;
  * @property-read \App\Models\Prof|null $prof
  * @method static \Illuminate\Database\Eloquent\Builder|Seance seancesDuProf($idProf)
  * @method static \Illuminate\Database\Eloquent\Builder|Seance whereProfId($value)
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Etudiant[] $absence
+ * @property-read int|null $absence_count
+ * @method static \Illuminate\Database\Eloquent\Builder|Seance betweenDates($start, $end)
+ * @method static \Illuminate\Database\Eloquent\Builder|Seance byFiliere($idf)
  */
 class Seance extends Model
 {
@@ -80,8 +84,6 @@ class Seance extends Model
 
     }
     public function scopeToday($query){
-
-
         $date = now();
         $d    = new DateTime($date);
         $d->format('l');  //pass l for lion aphabet in format
@@ -95,17 +97,25 @@ class Seance extends Model
         return $query->whereDate('date_debut','<=',$date)->whereDate('date_fin','>=',$date);
 //        echo $date;
     }
+    public function scopeBetweenDates($query,$start,$end){
+        return $query->whereDate('date_debut','<',$end)
+            ->whereDate('date_debut','>',$start);
+    }
     public function scopeActive($query){
-        return Seance::whereActive(1);
+        return $query->whereActive(1);
     }
     public function scopeSeancePasse($query){
-        return Seance::whereSeancePasse(1);
+        return $query->where('seance_passe',1);
     }
     public function scopeSeancesDuProf($query,$idProf){
         $mytime = Carbon::now();
         $str_time = date('Y-m-d',strtotime($mytime->toDateTimeString()))."";
 //        dd($str_time);
-        return Seance::where('prof_id',$idProf)->whereDate('date_debut','=',$str_time);
+        return $query->where('prof_id',$idProf)->whereDate('date_debut','=',$str_time);
+    }
+
+    public function scopeByFiliere($query,$idf){
+        return $query->where('filiere_id',$idf);
     }
     public function translateDayName($dayname):string{
         $arrEN = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
