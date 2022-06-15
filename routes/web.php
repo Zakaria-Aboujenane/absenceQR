@@ -79,3 +79,5 @@ Route::get('/etudiants',[\App\Http\Controllers\AdminController::class, 'ShowEtud
 Route::get('/ModifySeance/{idseance}',[\App\Http\Controllers\AdminController::class, 'ModifySeance']);
 Route::post('/ModifySeance/{idseance}',[\App\Http\Controllers\AdminController::class, 'ModifySeance']);
 Route::get('/DeleteSeance/{idseance}',[\App\Http\Controllers\AdminController::class, 'DeleteSeance']);
+Route::get('/profs',[\App\Http\Controllers\AdminController::class, 'ShowProfs']);
+Route::get('/filiers',[\App\Http\Controllers\AdminController::class, 'ShowFiliers']);

@@ -26,7 +26,7 @@
                             <td>{{$etd->id}}</td>
                             <td>{{$etd->name}}</td>
                             <td>{{$etd->email}}</td>
-                            <td>{{$etd->Cin}}</td>
+                            <td>{{$etd->cin}}</td>
                             <td>{{$etd->cne}}</td>
                             <td>{{$etd->email_parent}}</td>
                             <td>{{$etd->filiere->intitule}}</td>

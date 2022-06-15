@@ -7,7 +7,6 @@ use \App\Models\Prof;
 use \App\Models\Filiere;
 use \App\Models\Seance;
 use \App\Models\Etudiant;
-
 use Carbon\Carbon;
 
 class AdminController extends Controller
@@ -70,6 +69,17 @@ class AdminController extends Controller
         $arr = array('etudiant' => $etudiant);
         return view('etudiant',$arr);
     }
+    public function ShowProfs(){
+        $profs = Prof::all();
+        $arr = array('profs' => $profs);
+        return view('profs',$arr);
+    }
+
+    public function ShowFiliers(){
+        $filiers = Filiere::all();
+        $arr = array('filiers' => $filiers);
+        return view('filiers',$arr);
+    }
 
     public function LoadEtudiants(){
         
@@ -105,7 +115,7 @@ class AdminController extends Controller
     {
         $seance = Seance::find($idseance);
         $seance->delete();
-        return redirect(url()->previous());
+        return redirect()->back();
     }
 
 }
