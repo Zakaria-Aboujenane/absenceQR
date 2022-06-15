@@ -100,20 +100,77 @@ class EtudiantAbsenceController extends Controller
 
     public function getEtudiantsAbsentsParSeance($idSeance)
     {
-        $etudiants = Etudiant::whereHas('absence', function ($query) use ($idSeance) {
-            return $query->where('seance_id', $idSeance);
+        $etudiants_absents = Etudiant::whereHas('absence', function ($query) use ($idSeance) {
+            return $query->where('seance_id', $idSeance)->where('is_absent',1);
+        })->get();
+        $etudiants_presents = Etudiant::whereHas('absence', function ($query) use ($idSeance) {
+            return $query->where('seance_id', $idSeance)->where('is_absent',0);
         })->get();
         $listEtud = array();
-        foreach ($etudiants as $e ){
+        foreach ($etudiants_absents as $e ){
+            $abs = 0;
             array_push($listEtud,array(
                 "id_etudiant"=>$e->id,
                 "name"=>$e->name,
                 "CNE"=>$e->cne,
                 "email_parent"=>$e->email_parent,
+                "statusAbsence"=>"absent",
+                "id_seance"=>$idSeance,
+            ));
+        }
+        foreach ($etudiants_presents as $e ){
+            $abs = 0;
+            array_push($listEtud,array(
+                "id_etudiant"=>$e->id,
+                "name"=>$e->name,
+                "CNE"=>$e->cne,
+                "email_parent"=>$e->email_parent,
+                "statusAbsence"=>"present",
                 "id_seance"=>$idSeance,
             ));
         }
         return $listEtud;
+
+    }
+
+    public function getEtudiantSeancesAbsParEtudiant($idEtudiant)
+    {
+
+        setlocale(LC_TIME, 'fr_FR.UTF-8');
+        $seances = Seance::whereHas('absence', function ($query) use ($idEtudiant) {
+            return $query->where('etudiant_id', $idEtudiant)->where('is_absent',1);
+        })->get();
+        $seances_presentes = Seance::whereHas('absence', function ($query) use ($idEtudiant) {
+            return $query->where('etudiant_id', $idEtudiant)->where('is_absent',0);
+        })->get();
+        $listSeances = array();
+        foreach ($seances as $s ){
+           $dateT= date('d-m-Y', strtotime($s->date_debut));
+           $prof = Prof::find($s->prof_id);
+           $etud = Etudiant::find($idEtudiant);
+
+            array_push($listSeances,array(
+                "matiere"=>$s->matiere,
+                "date"=>$dateT,
+                "prof"=> $prof->name,
+                "email_parent"=>$etud->email_parent,
+                "statusPres"=>"absent"
+            ));
+        }
+        foreach ($seances_presentes as $s ){
+            $dateT= date('d-m-Y', strtotime($s->date_debut));
+            $prof = Prof::find($s->prof_id);
+            $etud = Etudiant::find($idEtudiant);
+
+            array_push($listSeances,array(
+                "matiere"=>$s->matiere,
+                "date"=>$dateT,
+                "prof"=> $prof->name,
+                "email_parent"=>$etud->email_parent,
+                "statusPres"=>"present"
+            ));
+        }
+        return $listSeances;
 
     }
 

@@ -91,3 +91,4 @@ Route::get('/profs',[\App\Http\Controllers\AdminController::class, 'ShowProfs'])
 Route::get('/filiers',[\App\Http\Controllers\AdminController::class, 'ShowFiliers']);
 
 Route::get('/etudiants_par_seance/{idSeance}',[EtudiantAbsenceController::class,'getEtudiantsAbsentsParSeance']);
+Route::get('/seances_par_etudiant/{idEtudiant}',[EtudiantAbsenceController::class,'getEtudiantSeancesAbsParEtudiant']);
