@@ -24,97 +24,6 @@
   <!-- Page Wrapper -->
   <div id="wrapper">
 
-    <!-- Sidebar -->
-    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-
-      <!-- Sidebar - Brand -->
-      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/admin">
-        <div class="sidebar-brand-icon rotate-n-0">
-            <i class="fas fa-building"></i>
-        </div>
-        <div class="sidebar-brand-text mx-3">Gestionnaire d'absences</div>
-      </a>
-
-      <!-- Divider -->
-      <hr class="sidebar-divider my-0">
-
-      <!-- Nav Item - Dashboard -->
-      <li class="nav-item active">
-        <a class="nav-link" href="/admin">
-          <i class="fas fa-fw fa-tachometer-alt"></i>
-          <span>Accueil</span></a>
-      </li>
-
-      <!-- Divider -->
-      <hr class="sidebar-divider">
-
-      <!-- Heading -->
-      <div class="sidebar-heading">
-        Paramétres
-      </div>
-
-      <!-- Nav Item - Pages Collapse Menu -->
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-          <i class="fas fa-fw fa-cog"></i>
-          <span>Seances</span>
-        </a>
-        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Options:</h6>
-            <a class="collapse-item" href="/AddSeances">Ajouter Seances</a>
-            <a class="collapse-item" href="/Seances">Liste des Seances</a>
-          </div>
-        </div>
-      </li>
-
-      
-
-      <!-- Nav Item - Utilities Collapse Menu -->
-
-      <li class="nav-item">
-        <a class="nav-link" href="/filiers">
-          <i class="fas fa-fw fa-table"></i>
-          <span>Filieres</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/profs">
-          <i class="fas fa-fw fa-table"></i>
-          <span>Professeurs</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/etudiants">
-          <i class="fas fa-fw fa-table"></i>
-          <span>Etudiants</span></a>
-      </li>
-
-      <!-- Divider -->
-      <hr class="sidebar-divider">
-
-      <!-- Heading -->
-      <div class="sidebar-heading">
-        Autres
-      </div>
-
-      <!-- Nav Item - Pages Collapse Menu -->
-      <!-- Nav Item - Charts -->
-      <li class="nav-item">
-        <a class="nav-link" href="/stats">
-          <i class="fas fa-fw fa-chart-area"></i>
-          <span>Statistiques</span></a>
-      </li>
-
-
-      <!-- Divider -->
-      <hr class="sidebar-divider d-none d-md-block">
-
-      <!-- Sidebar Toggler (Sidebar) -->
-      <div class="text-center d-none d-md-inline">
-        <button class="rounded-circle border-0" id="sidebarToggle"></button>
-      </div>
-
-    </ul>
-    <!-- End of Sidebar -->
 
     <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
@@ -169,7 +78,7 @@
             <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{Auth::guard(name: 'admin')->user()->name }}</span>
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{Auth::guard(name: 'prof')->user()->name }}</span>
                 <img class="img-profile rounded-circle" src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png">
               </a>
               <!-- Dropdown - User Information -->
@@ -257,8 +166,8 @@
  
    <!-- Page level custom scripts -->
    <script src="/js/demo/datatables-demo.js"></script>
- 
-   @yield('content2')
+   <script src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
 
 </body>
 

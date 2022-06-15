@@ -129,7 +129,8 @@ class EtudiantAbsenceController extends Controller
                 "id_seance"=>$idSeance,
             ));
         }
-        return $listEtud;
+        $arr = array('listSeance' => $listEtud , 'seance_id'=>$idSeance);
+        return view('SeanceAbsence',$arr);
 
     }
 
@@ -144,12 +145,13 @@ class EtudiantAbsenceController extends Controller
             return $query->where('etudiant_id', $idEtudiant)->where('is_absent',0);
         })->get();
         $listSeances = array();
+        $etud = Etudiant::find($idEtudiant);
         foreach ($seances as $s ){
            $dateT= date('d-m-Y', strtotime($s->date_debut));
            $prof = Prof::find($s->prof_id);
-           $etud = Etudiant::find($idEtudiant);
 
             array_push($listSeances,array(
+                "idseance"=>$s->id,
                 "matiere"=>$s->matiere,
                 "date"=>$dateT,
                 "prof"=> $prof->name,
@@ -163,6 +165,7 @@ class EtudiantAbsenceController extends Controller
             $etud = Etudiant::find($idEtudiant);
 
             array_push($listSeances,array(
+                "idseance"=>$s->id,
                 "matiere"=>$s->matiere,
                 "date"=>$dateT,
                 "prof"=> $prof->name,
@@ -170,7 +173,8 @@ class EtudiantAbsenceController extends Controller
                 "statusPres"=>"present"
             ));
         }
-        return $listSeances;
+        $arr = array('listSeance' => $listSeances , 'etudiantid' => $etud->id , 'etudiantname' => $etud->name);
+        return view('/EtudiantAbsence',$arr);
 
     }
 

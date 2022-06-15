@@ -36,7 +36,7 @@
                             <td>
                                 <center>
                                     @if($snc->seance_passe==1)
-                                    <a class="btn btn-info" class="graph" href="{{url('/ShowAbsence/'.$snc->id)}}"><i class="fa fa-list-ul"></i></a>
+                                    <a class="btn btn-info" class="graph" href="{{url('/etudiants_par_seance/'.$snc->id)}}"><i class="fa fa-list-ul"></i></a>
                                     @endif
                                     <a class="btn btn-warning" class="graph" href="{{url('/ModifySeance/'.$snc->id)}}"><i class="fa fa-pencil-alt"></i></a>
                                     <a class="btn btn-danger" class="graph" href="{{url('/DeleteSeance/'.$snc->id)}}"><i class="fa fa-trash-alt"></i></a>

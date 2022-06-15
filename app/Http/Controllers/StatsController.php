@@ -19,6 +19,7 @@ class StatsController extends Controller
  * selon un mois donne
  * retourner un tableau comme : [ "4ISI"=>30,"3ISI"=>40 ]=> 30 est le pourcentage de presence
  */
+
     public function absence_par_filiere_mentuel($mois = 'last month'){
             $filieres  = Filiere::get();
             $start = new DateTime('first day of '.$mois);
@@ -168,7 +169,4 @@ class StatsController extends Controller
             $q->where('seance_id',$id_seance)->where('is_absent',0);
         })->get()->count();
     }
-
-
-
 }
