@@ -6,7 +6,7 @@
     </div>
     <div class="card shadow mb-4">
     <div class="card-body">
-        <div id="qrCodePlace" > {{ $qrcode }} </div>
+        <center><div id="qrCodePlace" > {{ $qrcode }} </div></center>
 
         <form action="/fin_seance" method="GET">
             <input type="hidden" name="id_seance" value="{{$id_Seance}}">
