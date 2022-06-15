@@ -163,13 +163,14 @@ class LoginController extends Controller
             unset($etudiant->created_at);
             unset($etudiant->updated_at);
             unset($etudiant->filiere_id);
-            $myE = Etudiant::find($etudiant->id);
             $etudiantA = array(
                 "id"=>$etudiant->id,
                 "name"=>$etudiant->name,
+                "email"=>$etudiant->email,
                 "cne"=>$etudiant->cne,
                 "cin"=>$etudiant->cin,
-                "filiere_id"=>$myE->filiere_id
+                "api_token"=>$token
+
 
             );
            return $this->returnData('etudiant',$etudiantA);

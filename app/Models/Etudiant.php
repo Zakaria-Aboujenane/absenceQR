@@ -76,10 +76,10 @@ class Etudiant extends Authenticatable implements JWTSubject
             $query->where('seance_id', self::$static_id );
         })->get();
     }
-    public function scopeIsEtudiantPresent($query,$id_seance,$id_etudiant){
-        return  Etudiant::whereHas('absence', function ($query) use ($id_etudiant, $id_seance) {
-            $query->where('seance_id', $id_seance );
-        })->get();
+    public function scopeIsEtudiantPresent($query,$id_seance,$id_etud){
+        return  $query->whereHas('absence', function ($query) use ($id_etud, $id_seance) {
+            $query->where('seance_id', $id_seance )->where('etudiant_id',$id_etud);
+        });
     }
     public function getJWTIdentifier()
     {

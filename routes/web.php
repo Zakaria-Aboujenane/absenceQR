@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\EtudiantAbsenceController;
 use App\Http\Controllers\StatsController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -87,3 +88,4 @@ Route::get('/ModifySeance/{idseance}',[\App\Http\Controllers\AdminController::cl
 Route::post('/ModifySeance/{idseance}',[\App\Http\Controllers\AdminController::class, 'ModifySeance']);
 Route::get('/DeleteSeance/{idseance}',[\App\Http\Controllers\AdminController::class, 'DeleteSeance']);
 
+Route::get('/etudiants_par_seance/{idSeance}',[EtudiantAbsenceController::class,'getEtudiantsAbsentsParSeance']);

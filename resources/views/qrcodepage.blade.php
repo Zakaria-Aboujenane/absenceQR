@@ -46,7 +46,7 @@
     var intervalId = window.setInterval(function(){
         /// call your function here
         qr_code_generation();
-    }, 5000);
+    }, 20000);
 </script>
 
 </body>

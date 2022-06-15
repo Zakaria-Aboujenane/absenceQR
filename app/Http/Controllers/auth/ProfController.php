@@ -16,6 +16,7 @@ class ProfController extends Controller
             $qrcode = $this->getQrCode($id_Seance);
             $s=Seance::find($id_Seance);
             $s->active=1;
+            $s->save();
         return view("qrcodepage", compact('qrcode','id_filiere','id_Seance'));
     }
     public function getQrCode(){
