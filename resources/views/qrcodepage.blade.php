@@ -1,17 +1,10 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <script src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-    <meta name="csrf-token" content="{{ csrf_token() }}" />
-    <title>qrcode page</title>
-</head>
-<body>
+@extends('layouts.prof')
+@section('content')
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Séances</h1>
+    </div>
+
   <div id="qrCodePlace" > {{ $qrcode }} </div>
-<button id="reloadBtn" > reload QR code </button>
 
   <form action="/fin_seance" method="GET">
       <input type="hidden" name="id_seance" value="{{$id_Seance}}">
@@ -49,5 +42,5 @@
     }, 20000);
 </script>
 
-</body>
-</html>
+@endsection
+

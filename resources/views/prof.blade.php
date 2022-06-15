@@ -34,7 +34,7 @@ $seances = \App\Models\Seance::seancesDuProf($user->id)->get();
                             <td>
                                 <center>
                                     @if($snc->seance_passe==0)
-                                    <a class="btn btn-info" class="graph" href="{{URL::route('qr_code_page', [$snc->id,$snc->filiere_id] )}}"><i class="fa fa-qrcode-ul"></i></a>
+                                    <a class="btn btn-info" class="graph" href="{{URL::route('qr_code_page', [$snc->id,$snc->filiere_id] )}}"><i class="fa fa-qrcode"></i></a>
                                     @endif
                                 </center>
                             </td>
