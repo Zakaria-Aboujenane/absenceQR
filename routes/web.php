@@ -94,4 +94,4 @@ Route::get('/filiers',[\App\Http\Controllers\AdminController::class, 'ShowFilier
 Route::get('/etudiants_par_seance/{idSeance}',[EtudiantAbsenceController::class,'getEtudiantsAbsentsParSeance']);
 Route::get('/seances_par_etudiant/{idEtudiant}',[EtudiantAbsenceController::class,'getEtudiantSeancesAbsParEtudiant']);
 
-Route::get('/testmail/{email_parent}',[testingController::class,'sendMailTest']);
+Route::get('/testmail/{id_seance}/{id_etudiant}',[testingController::class,'sendMailTest']);

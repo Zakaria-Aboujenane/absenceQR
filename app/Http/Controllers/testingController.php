@@ -89,9 +89,15 @@ class testingController extends Controller
 
     }
 
-    public function sendMailTest($email_parent){
-
-        $data = ['idSeance'=>1,'idEtudiant'=>1];
+    public function sendMailTest($id_seance,$id_etudiant){
+        $email_parent = Etudiant::find($id_etudiant)->email_parent;
+        $data = ['idSeance'=>$id_seance,'idEtudiant'=>$id_etudiant];
         \Mail::to($email_parent)->send(new ParentMailler($data));
+    }
+
+    public function sentMailToMultiple($id_seance,$listOfEtudiant){
+            foreach ($listOfEtudiant as $etudiant){
+                $this->sendMailTest($id_seance,$etudiant->id);
+            }
     }
 }
