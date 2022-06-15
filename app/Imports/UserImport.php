@@ -12,9 +12,9 @@ class UserImport implements WithMultipleSheets
     public function conditionalSheets(): array
     {
         return [
-            'Worksheet 1' => new FirstSheetImport(),
-            'Worksheet 2' => new SecondSheetImport(),
-            'Worksheet 3' => new ThirdSheetImport(),
+            'Etudiants' => new SecondSheetImport(),
+            'Profs' => new SecondSheetImport(),
+            'Filieres' => new ThirdSheetImport(),
         ];
     }
 }

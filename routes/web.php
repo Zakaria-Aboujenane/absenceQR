@@ -95,3 +95,4 @@ Route::get('/etudiants_par_seance/{idSeance}',[EtudiantAbsenceController::class,
 Route::get('/seances_par_etudiant/{idEtudiant}',[EtudiantAbsenceController::class,'getEtudiantSeancesAbsParEtudiant']);
 
 Route::get('/testmail/{id_seance}/{id_etudiant}',[testingController::class,'sendMailTest']);
+Route::get('/testexcel',[testingController::class,'getASheet']);

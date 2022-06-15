@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\UserImport;
 use App\Mail\ParentMailler;
 use App\Models\Etudiant;
 use App\Models\Filiere;
 use App\Models\Prof;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Maatwebsite\Excel\Facades\Excel;
 
 class testingController extends Controller
 {
@@ -99,5 +101,10 @@ class testingController extends Controller
             foreach ($listOfEtudiant as $etudiant){
                 $this->sendMailTest($id_seance,$etudiant->id);
             }
+    }
+    public function getASheet(){
+        $import = new UserImport();
+        $import->onlySheets('Etudiants', 'Filieres','Profs');
+        Excel::import($import, 'excel/isga.xlsx');
     }
 }
