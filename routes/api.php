@@ -12,7 +12,5 @@ Route::get('/test',[EtudiantAbsenceController::class,'seances_api']);
 Route::group(['middleware' => 'api'], function($router) {
     Route::get('/seances-actives',[EtudiantAbsenceController::class,'seances_api'])->middleware('auth.guard:etudiant-api');
     Route::post('/marquer_absence',[EtudiantAbsenceController::class,'marquerAbsence'])->middleware('auth.guard:etudiant-api');
-//    Route::post('ajouter_absent',[EtudiantAbsenceController::class,'ajouterLesAbsents'])
-//        ->middleware('auth.guard:etudiant-api');;
 });
 

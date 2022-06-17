@@ -9,6 +9,7 @@ use App\Models\Filiere;
 use App\Models\Prof;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Redirect;
 use Maatwebsite\Excel\Facades\Excel;
 
 class testingController extends Controller
@@ -95,6 +96,7 @@ class testingController extends Controller
         $email_parent = Etudiant::find($id_etudiant)->email_parent;
         $data = ['idSeance'=>$id_seance,'idEtudiant'=>$id_etudiant];
         \Mail::to($email_parent)->send(new ParentMailler($data));
+        return Redirect::to(url('/seances_par_etudiant/'.$id_etudiant));
     }
 
     public function sentMailToMultiple($id_seance,$listOfEtudiant){

@@ -81,6 +81,9 @@ class Etudiant extends Authenticatable implements JWTSubject
             $query->where('seance_id', $id_seance )->where('etudiant_id',$id_etud);
         });
     }
+    public function IsEtudiantPresentOrABS($query,$id_seance,$id_etud){
+        $users = \DB::select('SELECT * from absence WHERE etudiant_id='.$id_etud);
+    }
     public function getJWTIdentifier()
     {
         return $this->getKey();

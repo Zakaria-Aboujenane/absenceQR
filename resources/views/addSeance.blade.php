@@ -38,13 +38,21 @@
             </div>
 
         </div>
-    
-    
+
+
     <div class="btn-group float-right  col-sm-2" >
         <button type="submit" class="btn btn-primary btn-user float-right">
             <i class="fa fa-check"></i>
         </button>
     </div>
+
+    <script>
+
+//        $('#filier').on('change', function() {
+//            alert( this.value );
+//        });
+
+    </script>
 </form>
 
 

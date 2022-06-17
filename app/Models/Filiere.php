@@ -34,7 +34,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Filiere extends Model
 {
     use HasFactory;
-    
+
     protected $fillable = [
         'intitule','niveau'
     ];
@@ -43,10 +43,11 @@ class Filiere extends Model
     {
         return $this->hasMany(Etudiant::class);
     }
-    public function filieres()
+    public function profs()
     {
         return $this->belongsToMany(Prof::class,'profs_filieres');
     }
+
     public function seances()
     {
         return $this->hasMany(Seance::class);

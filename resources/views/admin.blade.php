@@ -18,7 +18,7 @@
             <div class="row no-gutters align-items-center">
               <div class="col mr-2">
                 <div class="text-xs font-weight-bold text-success text-uppercase mb-1">étudaiants présents</div>
-                <div class="h5 mb-0 font-weight-bold text-gray-800">125</div>
+                <div class="h5 mb-0 font-weight-bold text-gray-800">{{$etudiants_presents}}</div>
               </div>
               <div class="col-auto">
                 <i class="fas fa-check fa-2x text-gray-300"></i>
@@ -35,7 +35,7 @@
             <div class="row no-gutters align-items-center">
               <div class="col mr-2">
                 <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">étudaiants absents</div>
-                <div class="h5 mb-0 font-weight-bold text-gray-800">50</div>
+                <div class="h5 mb-0 font-weight-bold text-gray-800">{{$etudiants_absents}}</div>
               </div>
               <div class="col-auto">
                 <i class="fas fa-exclamation-triangle fa-2x text-gray-300"></i>
@@ -54,11 +54,11 @@
                 <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Pourcentage de présence</div>
                 <div class="row no-gutters align-items-center">
                   <div class="col-auto">
-                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">50%</div>
+                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{$pourcentage_presence}}%</div>
                   </div>
                   <div class="col">
                     <div class="progress progress-sm mr-2">
-                      <div class="progress-bar bg-info" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                      <div class="progress-bar bg-info" role="progressbar" style="width: {{$pourcentage_presence}}%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
                   </div>
                 </div>
@@ -77,8 +77,8 @@
           <div class="card-body">
             <div class="row no-gutters align-items-center">
               <div class="col mr-2">
-                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Filiers</div>
-                <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
+                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Filieres</div>
+                <div class="h5 mb-0 font-weight-bold text-gray-800">{{$nbrFils}}</div>
               </div>
               <div class="col-auto">
                 <i class="fas fa-number fa-2x text-gray-300"></i>
@@ -98,7 +98,7 @@
         <div class="card shadow mb-4">
           <!-- Card Header - Dropdown -->
           <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-            <h6 class="m-0 font-weight-bold text-primary">Earnings Overview</h6>
+            <h6 class="m-0 font-weight-bold text-primary">statistiques de presence selon la filiere</h6>
             <div class="dropdown no-arrow">
               <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" >
                 <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
@@ -121,7 +121,7 @@
         </div>
       </div>
 
-      
+
     <!-- Content Row -->
     <div class="row">
                 <!-- Begin Page Content -->
@@ -184,13 +184,13 @@
           </div>
         </div>
         <!-- /.container-fluid -->
-      <?php 
+      <?php
         $arry = [19,12];
       ?>
 
-        
 
-       
+
+
 
     </div>
     @endsection
@@ -198,10 +198,10 @@
     <script>
         Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
         Chart.defaults.global.defaultFontColor = '#858796';
-    
+
         // Set new default font family and font color to mimic Bootstrap's default styling
-    
-    
+
+
         function number_format(number, decimals, dec_point, thousands_sep) {
             // *     example: number_format(1234.56, 2, ',', ' ');
             // *     return: '1 234,56'
@@ -226,21 +226,21 @@
             }
             return s.join(dec);
         }
-    
+
         // Bar Chart Example
-    
-    
+
+
         var ctx = document.getElementById("myBarChart1");
         var myBarChart1 = new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: @json($result_f),
+                labels: @json($filieres),
                 datasets: [{
                     label: "totale",
                     backgroundColor: "#4e73df",
                     hoverBackgroundColor: "#2e59d9",
                     borderColor: "#4e73df",
-                    data:@json($result_p),
+                    data:@json($pourcentages),
                 }],
             },
             options: {
@@ -311,7 +311,7 @@
                 },
             }
         });
-       
+
     </script>
 
   <!-- /.container-fluid -->

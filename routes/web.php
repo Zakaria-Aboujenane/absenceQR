@@ -1,5 +1,6 @@
 <?php
-
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\auth\ProfController;
 use App\Http\Controllers\EtudiantAbsenceController;
 use App\Http\Controllers\StatsController;
 use App\Http\Controllers\testingController;
@@ -52,10 +53,9 @@ Route::group(['middleware' => 'auth:admin'], function () {
 Route::group(['middleware' => 'auth:prof'], function () {
     Route::view('/prof', 'prof');
 //    Route::get('/prof/seances',[\App\Http\Controllers\SeanceController::class,'listSeancesParProf']);
-    Route::get('prof/qrcodepage/{id_seance}/{id_filiere}',[\App\Http\Controllers\auth\ProfController::class,'getQrCodePage'])->name('qr_code_page');
-    Route::get('/ajax-request',[\App\Http\Controllers\auth\ProfController::class,'getQrCode']);
-    Route::get('/fin_seance',[\App\Http\Controllers\EtudiantAbsenceController::class,'ajouterLesAbsents']);
-
+    Route::get('prof/qrcodepage/{id_seance}/{id_filiere}',[ProfController::class,'getQrCodePage'])->name('qr_code_page');
+    Route::get('/ajax-request',[ProfController::class,'getQrCode']);
+    Route::get('/fin_seance',[EtudiantAbsenceController::class,'ajouterLesAbsents']);
 });
 
 Route::group(['middleware' => 'auth:etudiant'], function () {
@@ -66,30 +66,30 @@ Route::get('/logout', [LoginController::class,'logout'])->name('logout');
 
 
 //testing:
-Route::get('/test',[\App\Http\Controllers\testingController::class,'test_Filiere_Prof']);
+Route::get('/test',[testingController::class,'test_Filiere_Prof']);
 
-Route::get('/AddSeances',[\App\Http\Controllers\AdminController::class, 'AddSeance']);
-Route::post('/AddSeances',[\App\Http\Controllers\AdminController::class, 'AddSeance']);
+Route::get('/AddSeances',[AdminController::class, 'AddSeance']);
+Route::post('/AddSeances',[AdminController::class, 'AddSeance']);
 
 
-Route::get('/AddSeances/{name}/{nbr_ocr}/{prof}/{filier}',[\App\Http\Controllers\AdminController::class, 'AddSeances']);
-Route::post('/AddSeances/{name}/{nbr_ocr}/{prof}/{filier}',[\App\Http\Controllers\AdminController::class, 'AddSeances']);
+Route::get('/AddSeances/{name}/{nbr_ocr}/{prof}/{filier}',[AdminController::class, 'AddSeances']);
+Route::post('/AddSeances/{name}/{nbr_ocr}/{prof}/{filier}',[AdminController::class, 'AddSeances']);
 
 
 
 Route::get('testing',[StatsController::class,'nb_fils']);
 
-Route::get('/loadEtudiants',[\App\Http\Controllers\AdminController::class, 'LoadEtudiants']);
+Route::get('/loadEtudiants',[AdminController::class, 'LoadEtudiants']);
 
-Route::get('/Seances',[\App\Http\Controllers\AdminController::class, 'ShowSeances']);
-Route::get('/etudiants',[\App\Http\Controllers\AdminController::class, 'ShowEtudiants']);
+Route::get('/Seances',[AdminController::class, 'ShowSeances']);
+Route::get('/etudiants',[AdminController::class, 'ShowEtudiants']);
 
 
-Route::get('/ModifySeance/{idseance}',[\App\Http\Controllers\AdminController::class, 'ModifySeance']);
-Route::post('/ModifySeance/{idseance}',[\App\Http\Controllers\AdminController::class, 'ModifySeance']);
-Route::get('/DeleteSeance/{idseance}',[\App\Http\Controllers\AdminController::class, 'DeleteSeance']);
-Route::get('/profs',[\App\Http\Controllers\AdminController::class, 'ShowProfs']);
-Route::get('/filiers',[\App\Http\Controllers\AdminController::class, 'ShowFiliers']);
+Route::get('/ModifySeance/{idseance}',[AdminController::class, 'ModifySeance']);
+Route::post('/ModifySeance/{idseance}',[AdminController::class, 'ModifySeance']);
+Route::get('/DeleteSeance/{idseance}',[AdminController::class, 'DeleteSeance']);
+Route::get('/profs',[AdminController::class, 'ShowProfs']);
+Route::get('/filiers',[AdminController::class, 'ShowFiliers']);
 
 Route::get('/etudiants_par_seance/{idSeance}',[EtudiantAbsenceController::class,'getEtudiantsAbsentsParSeance']);
 Route::get('/seances_par_etudiant/{idEtudiant}',[EtudiantAbsenceController::class,'getEtudiantSeancesAbsParEtudiant']);

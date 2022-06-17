@@ -33,8 +33,18 @@
                             <td>{{$etd->filiere->niveau}}</td>
 
                             <td>
+                                <?php
+                                $users = \DB::select('SELECT * from absence WHERE etudiant_id='.$etd->id);
+//                                    dd($users);
+//                                echo "hanta".$users[0]->is_absent;
+                                ?>
+
                                 <center>
+                                    @if($users[0]->is_absent!="")
                                     <a class="btn btn-info" class="graph" href="{{url('/seances_par_etudiant/'.$etd->id)}}"><i class="fa fa-list-ul"></i></a>
+                                    @else
+                                    <p>Pas encore</p>
+                                        @endif
                                 </center>
                             </td>
                         </tr>

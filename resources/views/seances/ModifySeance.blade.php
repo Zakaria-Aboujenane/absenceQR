@@ -6,7 +6,7 @@
     <h1 class="h3 mb-0 text-gray-800">Modifier Une Seance</h1>
 </div>
 
-<form method="post" action="{{url('/ModifierSeance'.$seance->id)}}">
+<form method="post" action="{{url('/ModifySeance/'.$seance->id)}}">
     {{ csrf_field() }}
         <div class="form-group row">
             <label for="name" class="col-sm-2 col-form-label">Intitule</label>
@@ -46,7 +46,7 @@
                 <input type="time"  class="form-control" id="heure"  name="heure" value="{{ $seance->heure_debut }}"  required>
             </div>
         </div>
-    
+
     <div class="btn-group float-right  col-sm-2" >
         <button type="submit" class="btn btn-primary btn-user float-right">
             <i class="fa fa-check"></i>

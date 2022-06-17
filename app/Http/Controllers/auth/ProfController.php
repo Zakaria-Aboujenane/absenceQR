@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Filiere;
+use App\Models\Prof;
 use App\Models\QrCode;
 use App\Models\Seance;
 use Illuminate\Http\Request;
@@ -30,4 +32,12 @@ class ProfController extends Controller
         QrCode::setqrtoken($var);
         return QrCode::all()->first()->qr_code_token;
     }
+
+    public function getProfsParFiliere($id_filiere){
+
+        return  Prof::whereHas('profs_filieres', function ($query) use ($id_filiere) {
+            $query->where('filiere_id', $id_filiere );
+        })->get();
+
+}
 }

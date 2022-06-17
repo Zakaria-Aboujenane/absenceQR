@@ -13,11 +13,42 @@ use Nette\Utils\DateTime;
 
 class AdminController extends Controller
 {
-    
+    public function absence_par_filiere_annuels($year = -1){
+        if($year == -1){
+            $year = date('Y');
+        }
+        $start = new DateTime('first day of January'.$year);
+        $end = new DateTime('last day of December'.$year);
+        $filieres  = Filiere::get();
+        $resultat_f = array();
+        $resultat_p = array();
+        foreach ($filieres as $f){
+            $seances = Seance::betweenDates($start,$end)->where(function($q) use ($f) {
+                $q->byFiliere($f->id);
+                $q->SeancePasse();
+            })->get();
+            $nbr_abs=0;
+            $nbr_pres=0;
+            $nbr_seances=0;
+            foreach ($seances as $s){
+                $nbr_abs += $this->nbr_absence_par_seance($s->id);
+                $nbr_pres += $this->nbr_presence_par_seance($s->id);
+                $nbr_seances +=$nbr_abs+$nbr_pres;
+            }
+            if($nbr_seances >0){
+                $pourc = number_format(($nbr_pres*100)/$nbr_seances, 2, '.', '') ;
+                array_push($resultat_f,
+                    $f->intitule);
+                array_push($resultat_p,(float)$pourc);
+            }
+        }
+        return ["result_f"=>$resultat_f,"result_p"=>$resultat_p];
+
+    }
     public function AddSeance(Request $request){
 
         if($request->isMethod('post')){
-            
+
             $name = $request->input('name');
             $nbr_ocr = $request->input('nbr_ocr');
             $prof = $request->input('prof');
@@ -55,13 +86,34 @@ class AdminController extends Controller
         $arr = array('name' => $name , 'nbr_ocr' => $nbr_ocr ,'prof'=> $prof ,'filier' => $filier);
         return view('addSeances',$arr);
     }
+    public function sayHi(){
 
+    }
     public function adminData(){
-        
-        $arrC = $this->absence_par_filiere_annuel();
-        $seance = Seance::all();
+
+        $arrC = $this->absence_par_filiere_annuels();
+
+        $seance = $this->nbr_seances_annuel();
+        $etudiants_absents = $this->nombre_absents_annuel(1);
+        $etudiants_presents = $this->nombre_absents_annuel(0);
+        $filieres = $arrC['result_f'];
+//        echo $filieres[0];
+        $nbr_fils = Filiere::count();
+        $pourcentages = $arrC['result_p'];
         $arr = array('seance' => $seance);
-        return view('admin',$arr,$arrC);
+        $pourcentagePresence=0;
+        if(($etudiants_presents+$etudiants_absents)!=0 ){
+            $pourcentagePresence = ($etudiants_presents*100)/($etudiants_presents+$etudiants_absents);
+        }
+
+        return view('admin',["seances"=>$seance,
+            "etudiants_absents"=>$etudiants_absents,
+            "etudiants_presents"=>$etudiants_presents,
+            "filieres"=>$filieres,
+            "nbrFils"=>$nbr_fils,
+            "pourcentages"=>$pourcentages,
+            "pourcentage_presence"=>number_format((float)$pourcentagePresence, 2, '.', ''),
+            ]);
     }
     public function ShowSeances(){
         $seance = Seance::all();
@@ -87,7 +139,7 @@ class AdminController extends Controller
     }
 
     public function LoadEtudiants(){
-        
+
 
 
         return redirect('/admin');
@@ -115,43 +167,56 @@ class AdminController extends Controller
         return view('seances.ModifySeance', $arr , $arrDD);
     }
 
-    
+
     public function DeleteSeance($idseance)
     {
         $seance = Seance::find($idseance);
         $seance->delete();
         return redirect()->back();
     }
-    public function absence_par_filiere_annuel($year = -1){
+
+
+
+    // nbre des absences selon une seance :
+    public function nbr_absence_par_seance($id_seance){
+        return $absents = Etudiant::whereHas('absence', function($q) use ($id_seance) {
+            $q->where('seance_id',$id_seance)->where('is_absent',1);
+        })->get()->count();
+    }
+    public function nbr_presence_par_seance($id_seance){
+        return $absents = Etudiant::whereHas('absence', function($q) use ($id_seance) {
+            $q->where('seance_id',$id_seance)->where('is_absent',0);
+        })->get()->count();
+    }
+
+
+    public function nombre_absents_annuel(int $absent=1, $year=-1){
         if($year == -1){
             $year = date('Y');
         }
-        $start = new DateTime('first day of January'.$year);
-        $end = new DateTime('last day of December'.$year);
-        $filieres  = Filiere::get();
-        $resultat_f = array();
-        $resultat_p = array();
-        foreach ($filieres as $f){
-            $seances = Seance::betweenDates($start,$end)->where(function($q) use ($f) {
-                $q->byFiliere($f->id);
-                $q->SeancePasse();
-            })->get();
-            $nbr_abs=0;
-            $nbr_pres=0;
-            $nbr_seances=0;
-            foreach ($seances as $s){
-                $nbr_abs += $this->nbr_absence_par_seance($s->id);
-                $nbr_pres += $this->nbr_presence_par_seance($s->id);
-                $nbr_seances +=$nbr_abs+$nbr_pres;
-            }
-            if($nbr_seances >0){
-                $pourc = number_format(($nbr_pres*100)/$nbr_seances, 2, '.', '') ;
-                array_push($resultat_f,[
-                    "filiere"=>$f->intitule,]);
-                array_push($resultat_p,["pourcentages"=>(float)$pourc]);
-            }
-        }
-        return ["result_f"=>$resultat_f,"result_p"=>$resultat_p];
-
+        $absents = Etudiant::whereHas('absence', function($q) use ($absent) {
+            return $q->where('is_absent',$absent);
+        })->get()->count();
+        return $absents;
     }
+
+    public function nbr_seances_annuel($year=-1){
+        if($year == -1){
+            $year = date('Y');
+        }
+        $nbr =  $this->seances_annuels($year)->count();
+        return $nbr;
+    }
+
+    public function seances_annuels($year='-1'){
+        if($year == -1){
+            $year = date('Y');
+        }
+        $firstOfyear = new DateTime('first day of January'.$year);
+        $lastOfyear = new DateTime('last day of December'.$year);
+        $seances  = Seance::betweenDates($firstOfyear,$lastOfyear)->get();
+
+        return $seances;
+    }
+
 }
